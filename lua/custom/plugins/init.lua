@@ -11,6 +11,20 @@ vim.api.nvim_create_autocmd({ 'TermOpen', 'BufEnter' }, {
 
 -- alias for split and open terminal
 vim.api.nvim_create_user_command('Vt', function()
-  vim.cmd '90vsplit | terminal'
+  vim.cmd '80vsplit | terminal'
 end, { nargs = 0, bang = true })
-return {}
+
+local plugins = {
+  {
+    'olexsmir/gopher.nvim',
+    ft = 'go',
+    config = function(_, opts)
+      require('gopher').setup(opts)
+    end,
+    build = function()
+      vim.cmd [[silent! GoInstallDeps]]
+    end,
+  },
+}
+
+return plugins
